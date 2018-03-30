@@ -46,6 +46,10 @@ Comments:
     * Encountered Error: "Requests to this API must be over SSL", after
         googling this error, found out that the entry point was http://
         instead of https://
+    * While the location you are searching for is hardcoded currently,
+        since I have the URL split the way it is, this allows for easy
+        modifications if later you wanted to prompt the user for a city
+        and have it run that location instead.
 
 Resources:
     * https://developers.google.com/maps/documentation/geocoding/start?hl=en_US
@@ -55,7 +59,7 @@ Resources:
 Todos:
     * DONE: Sign-in to Google Console and retrieve API key
     * DONE: Connect to the API using the given link to retrieve JSON object
-    * Parse returned JSON object to give desired output
+    * DONE: Parse returned JSON object to give desired output
     
 """
 
@@ -66,20 +70,32 @@ from urllib.request import urlopen
 import json
 import codecs
 
+# name of city to search for
+address = 'Green Bay'
+
 api_key = 'AIzaSyDNTiZF0xoVU2eVAfQNdGPdmsv7Wa0pgqg'
-address = 'address=Green+Bay'
 start_point = 'https://maps.googleapis.com/maps/api/geocode/json'
 
 # create the full search url to pass to urlopen
-url = start_point + "?" + address + "&key=" + api_key
+url = start_point + "?address=" + address.replace(" ", "+") + "&key=" + api_key
 
 # the html is then stored in read_obj
 read_obj = urlopen(url)
 
+# adding read to endcode the JSON object to utf-8
 reader = codecs.getreader("utf-8")
+
+# load in the JSON object for output
 json_data = json.load(reader(read_obj))
 
-print(json.dumps(json_data, indent=4, sort_keys=True))
+# prints out all expected output
+print(address, end='\n\n')
+print("ID: ", end='')
+print(json_data['results'][0]['place_id'], end='\n\n')
+print("Latitude: ", end='')
+print(json_data['results'][0]['geometry']['location']['lat'], end='\n\n')
+print("Longitude: ", end='')
+print(json_data['results'][0]['geometry']['location']['lng'])
 
 
 
