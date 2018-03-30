@@ -10,13 +10,9 @@ Problem:
     the reponse and transform it to produce the expected output:
 
          Green Bay
-
          ID: <insert place_id here>
-
          Latitude: <insert latitude here>
-
          Longitude: <insert longitude here>
-
 
     Starting Endpoint = http://maps.googleapis.com/maps/api/geocode/json
 
@@ -32,9 +28,8 @@ Google Maps Geocoding API:
 
 Source Control:
     url = https://github.com/Kathleenbrown/BuzzFeed_Test_Kathleen_Brown
-    status = private ( please reach out to me to access this, I just didn't
-                want to have my code accessable by other possible
-                participants )
+    status = private ( please reach out to me to access this, didn't want
+                       to leave public in case of other participants )
 
 Comments:
     * Using Python for the dynamic libraries for handling JSON objects
@@ -45,31 +40,46 @@ Comments:
         built in searches
     * Played around a bit with the URL, will be a good reference for
         knowing how the JSON object is built later
-    * Using the urllib2 for opening the url link
+    * Using the urllib2 for opening the url link and storing html
+    * Importing the json library for easy access to the data type
+    * In order to print the JSON object, need to encode with utf-8
+    * Encountered Error: "Requests to this API must be over SSL", after
+        googling this error, found out that the entry point was http://
+        instead of https://
 
 Resources:
     * https://developers.google.com/maps/documentation/geocoding/start?hl=en_US
     * https://docs.python.org/2/library/urllib2.html
+    * https://docs.python.org/2/library/json.html
     
 Todos:
     * DONE: Sign-in to Google Console and retrieve API key
-    * Connect to the API using the given link to retrieve JSON object
+    * DONE: Connect to the API using the given link to retrieve JSON object
     * Parse returned JSON object to give desired output
     
 """
 
 #!/usr/bin/env python
 
+# included libraries
 from urllib.request import urlopen
+import json
+import codecs
 
 api_key = 'AIzaSyDNTiZF0xoVU2eVAfQNdGPdmsv7Wa0pgqg'
 address = 'address=Green+Bay'
-start_point = 'http://maps.googleapis.com/maps/api/geocode/json'
+start_point = 'https://maps.googleapis.com/maps/api/geocode/json'
 
 # create the full search url to pass to urlopen
 url = start_point + "?" + address + "&key=" + api_key
 
+# the html is then stored in read_obj
 read_obj = urlopen(url)
+
+reader = codecs.getreader("utf-8")
+json_data = json.load(reader(read_obj))
+
+print(json.dumps(json_data, indent=4, sort_keys=True))
 
 
 
