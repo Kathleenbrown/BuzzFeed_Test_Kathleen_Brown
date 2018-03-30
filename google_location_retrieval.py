@@ -3,6 +3,9 @@
 Author: Kathleen Brown
 Prepared For: BuzzFeed Recruiting Team
 Date: 03/30/2018
+Python Distro: 3.5.4
+Compiling & Running Instructions:
+    Compiling and execution handled through built-in Python Interpretor (Shell)
 
 Problem:
     Using the Google Maps API, retrieve the JSON response after
@@ -46,10 +49,10 @@ Comments:
     * Encountered Error: "Requests to this API must be over SSL", after
         googling this error, found out that the entry point was http://
         instead of https://
-    * While the location you are searching for is hardcoded currently,
-        since I have the URL split the way it is, this allows for easy
-        modifications if later you wanted to prompt the user for a city
-        and have it run that location instead.
+    * While the location (Green Bay) you are searching for is hardcoded
+        currently, since I have the URL split the way it is, this allows
+        for easy modifications if later you wanted to prompt the user for
+        a city/address and have it run that location instead.
 
 Resources:
     * https://developers.google.com/maps/documentation/geocoding/start?hl=en_US
